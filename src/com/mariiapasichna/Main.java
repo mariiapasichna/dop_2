@@ -11,7 +11,7 @@ public class Main {
 2.1. Также в выражении могут присутстовать знаки умножить и разделить. Вычислить значение строки с учетом приоритета операторов.*/
 
     public static void main(String[] args) {
-        String s = "10 - 10 * 3 + 2 / 2 - 1 - 6 * 1 / 3 - 1";
+        String s = "3 / 3 - 2 / 2";
         String[] arr = s.split(" ");
         System.out.println(Arrays.toString(arr));
         List<Double> results = new ArrayList<>();
@@ -34,7 +34,7 @@ public class Main {
         double res;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i].charAt(0) == '+') {
-                if (i == 1) {
+                if (i == 1 && arr[i].charAt(0) == '+') {
                     res = Integer.parseInt(arr[i - 1]);
                     results.add(res);
                 } else if ((i + 2) == arr.length || arr[i + 2].charAt(0) == '+' || arr[i + 2].charAt(0) == '-') {
@@ -44,7 +44,7 @@ public class Main {
             } else if (arr[i].charAt(0) == '-' && ((i + 2) == arr.length || arr[i + 2].charAt(0) == '+' || arr[i + 2].charAt(0) == '-')) {
                 res = -Integer.parseInt(arr[i + 1]);
                 results.add(res);
-            } else if (i == 1) {
+            } else if (i == 1 && arr[i].charAt(0) == '-') {
                 res = Integer.parseInt(arr[i - 1]);
                 results.add(res);
             }
@@ -56,8 +56,11 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             if (arr[i].charAt(0) == '*' || arr[i].charAt(0) == '/') {
                 if (arr[i].charAt(0) == '*') {
-                    if (arr[i - 2].charAt(0) == '+' || arr[i - 2].charAt(0) == '-') {
-                        if (arr[i - 2].charAt(0) == '+') {
+                    if (i == 1 || arr[i - 2].charAt(0) == '+' || arr[i - 2].charAt(0) == '-') {
+                        if (i == 1) {
+                            res = Integer.parseInt(arr[i - 1]) * Integer.parseInt(arr[i + 1]);
+                            results.add(res);
+                        } else if (arr[i - 2].charAt(0) == '+') {
                             res = Integer.parseInt(arr[i - 1]) * Integer.parseInt(arr[i + 1]);
                             results.add(res);
                         } else if (arr[i - 2].charAt(0) == '-') {
@@ -72,8 +75,11 @@ public class Main {
                     }
                 }
                 if (arr[i].charAt(0) == '/') {
-                    if (arr[i - 2].charAt(0) == '+' || arr[i - 2].charAt(0) == '-') {
-                        if (arr[i - 2].charAt(0) == '+') {
+                    if (i == 1 || arr[i - 2].charAt(0) == '+' || arr[i - 2].charAt(0) == '-') {
+                        if (i == 1) {
+                            res = (double) Integer.parseInt(arr[i - 1]) / Integer.parseInt(arr[i + 1]);
+                            results.add(res);
+                        } else if (arr[i - 2].charAt(0) == '+') {
                             res = (double) Integer.parseInt(arr[i - 1]) / Integer.parseInt(arr[i + 1]);
                             results.add(res);
                         } else if (arr[i - 2].charAt(0) == '-') {
